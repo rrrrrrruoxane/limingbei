@@ -1,10 +1,15 @@
 #include "initialization.h"
 #include "ps2_controller.h"
-void setup() {
 
+PS2X ps2x;
+AccelStepper stepper(1,STEPPER_STEP_PIN,STEPPER_DIR_PIN);
+Servo servoElbow,servoWrist,servoClaw;
+Car car;
+
+void setup() {
+  initAll();
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
+  
 }

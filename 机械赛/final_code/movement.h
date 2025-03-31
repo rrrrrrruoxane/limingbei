@@ -1,9 +1,8 @@
 #ifndef MOVEMENT_H
 #define MOVEMENT_H
 
-#include "configuration.h"
 #include <Arduino.h>
-
+#include "configuration.h"
 extern Car car;
 extern AccelStepper stepper;
 extern Servo servoElbow;
