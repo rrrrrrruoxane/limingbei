@@ -4,24 +4,7 @@
 #include "movement.h"
 extern PS2X ps2x;
 
-// 获取左摇杆的 X/Y 值（0~255）
-int getLeftStickX() {
-  return ps2x.Analog(PSS_LX);
-}
-
-int getLeftStickY() {
-  return ps2x.Analog(PSS_LY);
-}
-
-// 获取右摇杆的 X/Y 值（0~255）
-int getRightStickX() {
-  return ps2x.Analog(PSS_RX);
-}
-
-int getRightStickY() {
-  return ps2x.Analog(PSS_RY);
-}
-// 按键映射（车轮）（需改键）
+// 按键映射（车轮）
 void handleWheels(){
   if (ps2x.ButtonPressed(PSB_CROSS)) { // 假设按键“X”对应前进
     moveForward(200);
@@ -36,5 +19,38 @@ void handleWheels(){
   }
 }
 
+//升降电机（由左边遥感的Y方向控制）
+void handleLiftControl() {
+  int ly = ps2x.Analog(PSS_LY);  // 左摇杆Y轴值（0-255）
+  const int deadZone = 15;       // 死区范围（避免抖动）
+  const float maxMoveMM = 5.0;   // 最大每帧可移动 5mm
+  int center = 128;
+  int offset = ly - center;
+  if (abs(offset) < deadZone) return;
+  float mmDelta = map(offset, -127, 127, maxMoveMM, -maxMoveMM);
+  if (mmDelta > 0) {
+    raiseLift(mmDelta);
+  } else {
+    lowerLift(-mmDelta);
+  }
+}
+
+//机械臂
+void handleServoControl() {
+  // 肘部舵机（R1键角度增加，R2键角度减小）
+  if (ps2x.Button(PSB_R1)) {
+    moveElbowTo(car.elbowAngle + 5);
+  } else if (ps2x.Button(PSB_R2)) {
+    moveElbowTo(car.elbowAngle - 5);
+  }
+  // 手腕舵机（L1键角度增加，L2键角度减小）
+  if (ps2x.Button(PSB_L1)) {
+    moveWristTo(car.wristAngle + 5);
+  } else if (ps2x.Button(PSB_L2)) {
+    moveWristTo(car.wristAngle - 5);
+  }
+}
+
+//爪子舵机
 
 #endif
