@@ -7,13 +7,13 @@ extern PS2X ps2x;
 extern AccelStepper stepper;
 extern Servo servoElbow;
 extern Servo servoWrist;
-//extern Servo servoClaw;
+extern Servo servoClaw;
 
 struct Car{
   int currentHeight;
   int elbowAngle;
   int wristAngle;
-  // int clawAngle;
+  int clawAngle;
   bool emergencyStop;
 };
 extern Car car;
@@ -44,7 +44,7 @@ void initStepper(){
 void initServos(){
   servoElbow.attach(SERVO_ELBOW_PIN);
   servoWrist.attach(SERVO_WRIST_PIN);
-  // servoClaw.attach(SERVO_CLAW_PIN);
+  servoClaw.attach(SERVO_CLAW_PIN);
   Serial.println("舵机初始化完成");
 }
 
@@ -72,12 +72,12 @@ void initCar(){
   car.currentHeight=0;
   car.elbowAngle=constrain(90,ELBOW_MIN_ANGLE,ELBOW_MAX_ANGLE);
   car.wristAngle=constrain(90,WRIST_MIN_ANGLE,WRIST_MAX_ANGLE);
-  // car.clawAngle=CLAW_MIN_ANGLE;
+  car.clawAngle= constrain(90, CLAW_MIN_ANGLE, CLAW_MAX_ANGLE);
   car.emergencyStop=false;
   // 移动舵机到初始位置
   servoElbow.write(car.elbowAngle);
   servoWrist.write(car.wristAngle);
-  // servoClaw.write(car.clawAngle);
+  servoClaw.write(car.clawAngle);
 
   Serial.println("机器人状态初始化完成");
 }

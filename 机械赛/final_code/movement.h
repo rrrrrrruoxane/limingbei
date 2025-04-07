@@ -7,7 +7,7 @@ extern Car car;
 extern AccelStepper stepper;
 extern Servo servoElbow;
 extern Servo servoWrist;
-// extern Servo servoClaw;
+extern Servo servoClaw;
 
 //========== 车轮 ==========
 void setMotorSpeed(int in1, int in2, int ena, int speed) {
@@ -91,4 +91,13 @@ void moveWristTo(int angle) {
   car.wristAngle = angle;
 }
 
+void openClaw() {
+  servoClaw.write(CLAW_MAX_ANGLE);
+  car.clawAngle = CLAW_MAX_ANGLE;
+}
+
+void closeClaw() {
+  servoClaw.write(CLAW_MIN_ANGLE);
+  car.clawAngle = CLAW_MIN_ANGLE;
+}
 #endif

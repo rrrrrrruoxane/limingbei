@@ -45,6 +45,9 @@
 #define WRIST_MAX_ANGLE 160
 
 //机械臂夹爪
+#define SERVO_CLAW_PIN 29       // 具体引脚  
+#define CLAW_MIN_ANGLE 5.12  // 物理设计，最小无法完全闭合
+#define CLAW_MAX_ANGLE 110
 
 
 #endif

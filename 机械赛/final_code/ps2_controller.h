@@ -52,5 +52,12 @@ void handleServoControl() {
 }
 
 //爪子舵机
+void handleClawControl() {
+  if (ps2x.Button(PSB_PAD_DOWN)) {
+    openClaw();
+  } else if (ps2x.Button(PSB_PAD_UP)) {
+    closeClaw();
+  }
+}
 
 #endif

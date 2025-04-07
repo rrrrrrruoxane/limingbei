@@ -11,5 +11,10 @@ void setup() {
 }
 
 void loop() {
-  
+  ps2x.read_gamepad(); 
+  handleWheels();
+  handleLiftControl();
+  handleServoControl();
+  handleClawControl(); 
+  stepper.run();  
 }
