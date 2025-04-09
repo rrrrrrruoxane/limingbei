@@ -26,42 +26,44 @@ void setMotorSpeed(int in1, int in2, int ena, int speed) {
 }
 // 前进函数
 void moveForward(int speed) {
-  setMotorSpeed(L1_IN1, L1_IN2, L1_ENA, speed);
-  setMotorSpeed(R1_IN1, R1_IN2, R1_ENA, speed);
-  setMotorSpeed(L2_IN1, L2_IN2, L2_ENA, speed);
-  setMotorSpeed(R2_IN1, R2_IN2, R2_ENA, speed);
+  MOTOR_FWD(FL_IN1, FL_IN2); MOTOR_FWD(FR_IN1, FR_IN2);
+  MOTOR_FWD(BL_IN1, BL_IN2); MOTOR_FWD(BR_IN1, BR_IN2);
 }
 
 // 后退函数
 void moveBackward(int speed) {
-  setMotorSpeed(L1_IN1, L1_IN2, L1_ENA, -speed);
-  setMotorSpeed(R1_IN1, R1_IN2, R1_ENA, -speed);
-  setMotorSpeed(L2_IN1, L2_IN2, L2_ENA, -speed);
-  setMotorSpeed(R2_IN1, R2_IN2, R2_ENA, -speed);
+  MOTOR_REV(FL_IN1, FL_IN2); MOTOR_REV(FR_IN1, FR_IN2);
+  MOTOR_REV(BL_IN1, BL_IN2); MOTOR_REV(BR_IN1, BR_IN2);
 }
 
 //左转函数
 void turnLeft(int speed) {
-  setMotorSpeed(L1_IN1, L1_IN2, L1_ENA, -speed);
-  setMotorSpeed(R1_IN1, R1_IN2, R1_ENA, speed);
-  setMotorSpeed(L2_IN1, L2_IN2, L2_ENA, -speed);
-  setMotorSpeed(R2_IN1, R2_IN2, R2_ENA, speed);
+  MOTOR_REV(FL_IN1, FL_IN2); MOTOR_FWD(FR_IN1, FR_IN2);
+  MOTOR_REV(BL_IN1, BL_IN2); MOTOR_FWD(BR_IN1, BR_IN2);
 }
 
 //右转函数
 void turnRight(int speed) {
-  setMotorSpeed(L1_IN1, L1_IN2, L1_ENA, speed);
-  setMotorSpeed(R1_IN1, R1_IN2, R1_ENA, -speed);
-  setMotorSpeed(L2_IN1, L2_IN2, L2_ENA, speed);
-  setMotorSpeed(R2_IN1, R2_IN2, R2_ENA, -speed);
+  MOTOR_FWD(FL_IN1, FL_IN2); MOTOR_REV(FR_IN1, FR_IN2);
+  MOTOR_FWD(BL_IN1, BL_IN2); MOTOR_REV(BR_IN1, BR_IN2);
+}
+
+//左移函数
+void moveLeft() {
+  MOTOR_REV(FL_IN1, FL_IN2); MOTOR_FWD(FR_IN1, FR_IN2);
+  MOTOR_FWD(BL_IN1, BL_IN2); MOTOR_REV(BR_IN1, BR_IN2);
+}
+
+//右移函数
+void moveRight() {
+  MOTOR_FWD(FL_IN1, FL_IN2); MOTOR_REV(FR_IN1, FR_IN2);
+  MOTOR_REV(BL_IN1, BL_IN2); MOTOR_FWD(BR_IN1, BR_IN2);
 }
 
 //停下函数
-void stopMotors() {
-  setMotorSpeed(L1_IN1, L1_IN2, L1_ENA, 0);
-  setMotorSpeed(R1_IN1, R1_IN2, R1_ENA, 0);
-  setMotorSpeed(L2_IN1, L2_IN2, L2_ENA, 0);
-  setMotorSpeed(R2_IN1, R2_IN2, R2_ENA, 0);
+void stopAll() {
+  MOTOR_STOP(FL_IN1, FL_IN2); MOTOR_STOP(FR_IN1, FR_IN2);
+  MOTOR_STOP(BL_IN1, BL_IN2); MOTOR_STOP(BR_IN1, BR_IN2);
 }
 
 //==========  升降步进电机  ==========

@@ -18,19 +18,43 @@ struct Car{
 };
 extern Car car;
 
+void testMotorDirection() {
+  Serial.println("Testing FL motor...");
+  MOTOR_FWD(FL_IN1, FL_IN2); delay(1000); MOTOR_STOP(FL_IN1, FL_IN2);
+
+  Serial.println("Testing FR motor...");
+  MOTOR_FWD(FR_IN1, FR_IN2); delay(1000); MOTOR_STOP(FR_IN1, FR_IN2);
+
+  Serial.println("Testing BL motor...");
+  MOTOR_FWD(BL_IN1, BL_IN2); delay(1000); MOTOR_STOP(BL_IN1, BL_IN2);
+
+  Serial.println("Testing BR motor...");
+  MOTOR_FWD(BR_IN1, BR_IN2); delay(1000); MOTOR_STOP(BR_IN1, BR_IN2);
+}
+
 void initSerial(){
   Serial.begin(9600);
   Serial.println("串口已开启");
 }
 
+
+
 void initPS2X(){
- int error=ps2x.config_gamepad(PS2_CLK_PIN,PS2_CMD_PIN,PS2_SEL_PIN,PS2_DAT_PIN,true,true);
-  if(error!=0){
-    Serial.print("PS2 手柄初始化错误: ");
+  int error = 0;       // PS2控制器连接错误标志
+  byte type = 0;       // 控制器类型
+  byte vibrate = 0;    // 震动强度
+  delay(300);  // 短延时确保稳定
+  error = ps2x.config_gamepad(PS2_CLK_PIN, PS2_CMD_PIN, PS2_SEL_PIN, PS2_DAT_PIN, PRESSURES, RUMBLE);
+  if(error == 0) {
+    Serial.println("PS2 Controller Found");
+  } else {
+    Serial.println("PS2 Controller Error");
     Serial.println(error);
-  }else{
-    Serial.println("PS2 手柄初始化成功");
+    while (1);  // 如果初始化失败，停止运行
   }
+  
+  // 电机转向测试（上电后运行一次）
+  testMotorDirection();
 }
 
 void initStepper(){
@@ -48,24 +72,15 @@ void initServos(){
   Serial.println("舵机初始化完成");
 }
 
+
+//车轮
 void initMotors(){
-  pinMode(L1_IN1,OUTPUT);
-  pinMode(L1_IN2,OUTPUT);
-  pinMode(L1_ENA,OUTPUT);
+  pinMode(BL_IN1, OUTPUT); pinMode(BL_IN2, OUTPUT);
+  pinMode(FL_IN1, OUTPUT); pinMode(FL_IN2, OUTPUT);
+  pinMode(FR_IN1, OUTPUT); pinMode(FR_IN2, OUTPUT);
+  pinMode(BR_IN1, OUTPUT); pinMode(BR_IN2, OUTPUT);
 
-  pinMode(R1_IN1,OUTPUT);
-  pinMode(R1_IN2,OUTPUT);
-  pinMode(R1_ENA,OUTPUT);
-
-  pinMode(L2_IN1,OUTPUT);
-  pinMode(L2_IN2,OUTPUT);
-  pinMode(L2_ENA,OUTPUT);
-
-  pinMode(R2_IN1,OUTPUT);
-  pinMode(R2_IN2,OUTPUT);
-  pinMode(R2_ENA,OUTPUT);
-
-  Serial.println("车轮电机引脚初始化完成");
+  Serial.println("车轮初始化成功");
 }
 
 void initCar(){
@@ -91,5 +106,7 @@ void initAll() {
   initCar();
   Serial.println("系统初始化完成");
 }
+
+
 
 #endif

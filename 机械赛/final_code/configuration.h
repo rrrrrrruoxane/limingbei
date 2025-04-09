@@ -6,26 +6,21 @@
 #include <AccelStepper.h>
 
 //手柄
-#define PS2_DAT_PIN 22
-#define PS2_CMD_PIN 23
-#define PS2_SEL_PIN 24
-#define PS2_CLK_PIN 25
-//#define PRESSURES      false
-//#define RUMBLE         false
-
+#define PS2_DAT_PIN 4
+#define PS2_CMD_PIN 5
+#define PS2_SEL_PIN 6
+#define PS2_CLK_PIN 7
+#define PRESSURES      false
+#define RUMBLE         false
 //车轮
-#define L1_IN1 6
-#define L1_IN2 7
-#define L1_ENA 10
-#define R1_IN1 8
-#define R1_IN2 9
-#define R1_ENA 11
-#define L2_IN1 12
-#define L2_IN2 13
-#define L2_ENA 14
-#define R2_IN1 16
-#define R2_IN2 17
-#define R2_ENA 15
+#define BL_IN1 33  // 后左电机控制引脚1
+#define BL_IN2 32  // 后左电机控制引脚2
+#define FL_IN1 35  // 前左电机控制引脚1
+#define FL_IN2 34  // 前左电机控制引脚2
+#define FR_IN1 37  // 前右电机控制引脚1
+#define FR_IN2 36  // 前右电机控制引脚2
+#define BR_IN1 39  // 后右电机控制引脚1
+#define BR_IN2 38  // 后右电机控制引脚2
 
 //升降
 #define STEPPER_DIR_PIN 26//升降方向
@@ -45,9 +40,13 @@
 #define WRIST_MAX_ANGLE 160
 
 //机械臂夹爪
-#define SERVO_CLAW_PIN 29       // 具体引脚  
-#define CLAW_MIN_ANGLE 5.12  // 物理设计，最小无法完全闭合
-#define CLAW_MAX_ANGLE 110
+#define SERVO_CLAW_PIN 22       // 具体引脚  
+#define CLAW_MIN_ANGLE 2.9  // 物理设计，最小无法完全闭合
+#define CLAW_MAX_ANGLE 90
 
+// 电机控制宏定义
+#define MOTOR_STOP(mA1, mA2) { digitalWrite(mA1, LOW); digitalWrite(mA2, LOW); }  // 停止
+#define MOTOR_FWD(mA1, mA2)  { digitalWrite(mA1, HIGH); digitalWrite(mA2, LOW); } // 正转
+#define MOTOR_REV(mA1, mA2)  { digitalWrite(mA1, LOW); digitalWrite(mA2, HIGH); } // 反转
 
 #endif
